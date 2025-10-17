@@ -13,10 +13,17 @@ import {
   CInputGroupText,
   CRow,
 } from '@coreui/react'
+
+import { CCardHeader, CToast, CToastBody, CToastClose, CToastHeader, CToaster } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
-
+import { useRef, useState } from 'react'
+import Toasts from '../../../components/AppToasts'
 const Login = () => {
+  const [toast, addToast] = useState(0)
+  const toaster = useRef()
+  const toasts = Toasts({ title: 'Thông báo', body: 'Tên đăng nhập hoặc mật khẩu không đúng' })
+
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -46,9 +53,10 @@ const Login = () => {
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton color="primary" className="px-4" onClick={() => addToast(toasts)}>
                           Login
                         </CButton>
+                        <CToaster ref={toaster} push={toast} placement="top-end" />
                       </CCol>
                       <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0">

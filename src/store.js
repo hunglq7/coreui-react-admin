@@ -1,5 +1,8 @@
-import { legacy_createStore as createStore } from 'redux'
+import { legacy_createStore as createStore, compose, applyMiddleware } from 'redux'
 
+import { configureStore } from '@reduxjs/toolkit'
+import chucvuReducer from './views/danhmuc/chucvu/chucvuSlice'
+import phongbanReducer from './views/danhmuc/phongban/phongbanSlice'
 const initialState = {
   sidebarShow: true,
   theme: 'light',
@@ -14,5 +17,18 @@ const changeState = (state = initialState, { type, ...rest }) => {
   }
 }
 
-const store = createStore(changeState)
+export const store = configureStore({
+  reducer: {
+    changeState: changeState,
+    chucvus: chucvuReducer,
+    phongbans: phongbanReducer
+  },
+})
+// const middleware = [thunk];
+// // check nếu không phải production thì push logger vào để log ra những action
+// if (process.env.NODE_ENV !== 'production') {
+//   middleware.push(createLogger());
+// }
+// const enhancers = [reducers, applyMiddleware(...middleware)];
+// const store = createStore(changeState, compose(enhancers))
 export default store

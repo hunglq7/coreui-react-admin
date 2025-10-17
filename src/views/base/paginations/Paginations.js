@@ -36,11 +36,11 @@ const Paginations = () => {
             </p>
             <DocsExample href="components/pagination">
               <CPagination aria-label="Page navigation example">
-                <CPaginationItem>Previous</CPaginationItem>
+                <CPaginationItem>Trước</CPaginationItem>
                 <CPaginationItem>1</CPaginationItem>
                 <CPaginationItem>2</CPaginationItem>
                 <CPaginationItem>3</CPaginationItem>
-                <CPaginationItem>Next</CPaginationItem>
+                <CPaginationItem>Sau</CPaginationItem>
               </CPagination>
             </DocsExample>
           </CCardBody>

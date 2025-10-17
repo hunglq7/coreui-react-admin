@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { CContainer, CSpinner } from '@coreui/react'
-
+import ProtectRouter from './ProtectRouter'
 // routes config
 import routes from '../routes'
-
+const isLogin = false; //chua dang nhap
 const AppContent = () => {
   return (
     <CContainer className="px-4" lg>
@@ -18,12 +18,13 @@ const AppContent = () => {
                   path={route.path}
                   exact={route.exact}
                   name={route.name}
-                  element={<route.element />}
+                  element={<ProtectRouter><route.element /></ProtectRouter>}
                 />
               )
             )
           })}
-          <Route path="/" element={<Navigate to="dashboard" replace />} />
+
+          <Route path="/" element={<Navigate to="login" replace />} />
         </Routes>
       </Suspense>
     </CContainer>

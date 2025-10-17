@@ -16,7 +16,7 @@ const DocsComponents = (props) => (
         />
       </div>
       <div className="col-md col-12 px-lg-4">
-        <p color='secondary'>Công ty CP than Mông Dương</p>
+        <p className='text-primary fs-32' >Công ty CP than Mông Dương</p>
         Our Admin Panel isn’t just a mix of third-party components. It’s{' '}
         <strong>
           the only open-source React dashboard built on a professional, enterprise-grade UI

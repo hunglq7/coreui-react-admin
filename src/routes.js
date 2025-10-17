@@ -1,10 +1,13 @@
+import { element, exact } from 'prop-types'
 import React from 'react'
-
+//Danhmuc
+const Phongban = React.lazy(() => import('./views/danhmuc/phongban/Phongban'))
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
-const chucvu = React.lazy(() => import('./views/chucvu/Chucvu'))
+const chucvu = React.lazy(() => import('./views/danhmuc/chucvu/Chucvu'))
+const grid = React.lazy(() => import('./views/danhmuc/grid/grid'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
-
+const Login = React.lazy(() => import('./views/pages/login/Login'))
 // Base
 const Accordion = React.lazy(() => import('./views/base/accordion/Accordion'))
 const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'))
@@ -54,6 +57,7 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
+  { path: '/login', name: 'Login', element: Login },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
@@ -99,6 +103,8 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', element: Modals },
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
+  { path: '/phongban/phongban', name: 'Phòng ban', element: Phongban },
+  { path: '/grid/grid', name: 'Grid', element: grid },
 ]
 
 export default routes

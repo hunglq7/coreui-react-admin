@@ -27,17 +27,39 @@ const _nav = [
       text: 'NEW',
     },
   },
+  //DANH MỤC
+  {
+    component: CNavTitle,
+    name: 'Danh mục',
+  },
+  {
+    component: CNavGroup,
+    name: 'Danh mục',
+    to: '/danhmuc',
+    icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Phòng ban',
+        to: '/phongban/phongban',
+      },
+      {
+        component: CNavItem,
+        name: 'Chức vụ',
+        to: '/chucvu/chucvu',
+      },
+      {
+        component: CNavItem,
+        name: 'Grid',
+        to: '/grid/grid',
+      },
+    ],
+  },
   {
     component: CNavTitle,
     name: 'Theme',
   },
 
-  {
-    component: CNavItem,
-    name: 'Chức vụ',
-    to: '/chucvu/chucvu',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-  },
   {
     component: CNavItem,
     name: 'Colors',
@@ -188,6 +210,7 @@ const _nav = [
       },
     ],
   },
+  // Bootton
   {
     component: CNavGroup,
     name: 'Buttons',
