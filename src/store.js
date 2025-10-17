@@ -3,6 +3,7 @@ import { legacy_createStore as createStore, compose, applyMiddleware } from 'red
 import { configureStore } from '@reduxjs/toolkit'
 import chucvuReducer from './views/danhmuc/chucvu/chucvuSlice'
 import phongbanReducer from './views/danhmuc/phongban/phongbanSlice'
+import loginReducer from './views/pages/login/loginSlice'
 const initialState = {
   sidebarShow: true,
   theme: 'light',
@@ -21,7 +22,8 @@ export const store = configureStore({
   reducer: {
     changeState: changeState,
     chucvus: chucvuReducer,
-    phongbans: phongbanReducer
+    phongbans: phongbanReducer,
+    logins: loginReducer
   },
 })
 // const middleware = [thunk];

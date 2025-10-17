@@ -19,10 +19,30 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useRef, useState } from 'react'
 import Toasts from '../../../components/AppToasts'
+import { useEffect } from 'react'
+import { authService } from '../../../service/authService'
 const Login = () => {
   const [toast, addToast] = useState(0)
   const toaster = useRef()
   const toasts = Toasts({ title: 'Thông báo', body: 'Tên đăng nhập hoặc mật khẩu không đúng' })
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: '',
+  });
+  const { email, password } = inputs;
+  const [submitted, setSubmitted] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await authService.loginWithUserCredentials(email, password)
+        console.log(response)
+        dispatch(listLogin(response.data))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchData()
+  }, [])
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
