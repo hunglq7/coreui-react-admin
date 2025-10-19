@@ -22,37 +22,53 @@ import Toasts from '../../../components/AppToasts'
 import { useEffect } from 'react'
 import { authService } from '../../../service/authService'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [toast, addToast] = useState(0)
+  const form = useRef();
   const toaster = useRef()
   const toasts = Toasts({ title: 'Thông báo', body: 'Tên đăng nhập hoặc mật khẩu không đúng' })
-  const [email, setemail] = useState('')
-  const [password, setpassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [submitted, setSubmitted] = useState(false);
   const data = useSelector((state) => state.logins.data)
+  const navigate = useNavigate();
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
 
-  const handSummit = async () => {
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+  const handSummit = async (e) => {
+    e.preventDefault();
     const response = await authService.loginWithUserCredentials(email, password)
-    dispatch(listLogin(response.data))
+    if (response) {
+      navigate("/dashboard")
+    }
+    else {
+      addToast(toast)
+    }
   }
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={8}>
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm ref={form}>
                     <h1>Login</h1>
                     <p className="text-body-secondary">Sign In to your account</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" value={email} onChange={(e) => setemail(e.target.value)} />
+                      <CFormInput placeholder="Username" autoComplete="username" value={email} onChange={onChangeEmail} />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -63,7 +79,7 @@ const Login = () => {
                         placeholder="Password"
                         autoComplete="current-password"
                         value={password}
-                        onChange={(e) => setpassword(e.target.value)}
+                        onChange={onChangePassword}
                       />
                     </CInputGroup>
                     <CRow>

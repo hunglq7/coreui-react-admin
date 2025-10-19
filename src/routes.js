@@ -5,6 +5,7 @@ const Phongban = React.lazy(() => import('./views/danhmuc/phongban/Phongban'))
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const chucvu = React.lazy(() => import('./views/danhmuc/chucvu/Chucvu'))
+const donvitinh = React.lazy(() => import('./views/danhmuc/donvitinh/donvitinh'))
 const grid = React.lazy(() => import('./views/danhmuc/grid/grid'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 const Login = React.lazy(() => import('./views/pages/login/Login'))
@@ -104,6 +105,7 @@ const routes = [
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
   { path: '/phongban/phongban', name: 'Phòng ban', element: Phongban },
+  { path: '/donvitinh/donvitinh', name: 'Đơn vị tính', element: donvitinh },
   { path: '/grid/grid', name: 'Grid', element: grid },
 ]
 

@@ -50,6 +50,11 @@ const _nav = [
       },
       {
         component: CNavItem,
+        name: 'Đơn vị tính',
+        to: '/donvitinh/donvitinh',
+      },
+      {
+        component: CNavItem,
         name: 'Grid',
         to: '/grid/grid',
       },
