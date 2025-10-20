@@ -44,14 +44,20 @@ const Login = () => {
   };
   const handSummit = async (e) => {
     e.preventDefault();
-    const response = await authService.loginWithUserCredentials(email, password)
-    if (response) {
-      navigate("/dashboard")
-    }
-    else {
+    try {
+      const response = await authService.loginWithUserCredentials(email, password)
+      if (response) {
+        navigate("/dashboard")
+      }
+    } catch {
+      alert("Tên đăng nhập và mật khẩu không đúng")
       addToast(toast)
     }
+
+
+
   }
+
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
