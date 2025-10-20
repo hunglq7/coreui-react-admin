@@ -1,44 +1,27 @@
-import { AgGridReact } from 'ag-grid-react'
+
 import React, { useState, useEffect } from 'react'
 import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community'
 import { useDispatch, useSelector } from 'react-redux'
 import { listDonvitinh } from './donvitinhSlice'
 import { donvitinhService } from '../../../service/donvitinhService'
-import { useMemo } from 'react'
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Button } from 'primereact/button'
 import {  CCard,
     CCardBody,
     CCardHeader,
     CCol,
-    CRow,
-    CTable,
-    CTableBody,
-    CTableCaption,
-    CTableDataCell,
-    CTableHead,
-    CTableHeaderCell,
-    CTableRow,} from '@coreui/react'
+} from '@coreui/react'
+ 
 ModuleRegistry.registerModules([AllCommunityModule])
 
 const donvitinh = () => {
+ 
   const data = useSelector((state) => state.donvitinhs.data)
   const dispatch = useDispatch()
-  const [rowData, setRowData] = useState(data)
-  console.log('data mới', data)
-  // Column Definitions: Defines the columns to be displayed.
-  const [colDefs, setColDefs] = useState([
-    { field: 'id', filter: true },
-    {
-      field: 'tenDonViTinh',
-      headerName: 'Dơn vị tính',
-      filter: true,
-      floatingFilter: true,
-      editable: true,      
-    },
-    { field: 'trangThai' },
-  ])
-  const pagination = true
-  const paginationPageSize = 100
-  const paginationPageSizeSelector = [10, 50, 100]
+const  handleClick=()=>{
+  alert("Thêm thành công")
+}
   useEffect(() => {
     async function fetchData() {
       try {
@@ -50,52 +33,27 @@ const donvitinh = () => {
     }
     fetchData()
   }, [dispatch])
-  const rowSelection = useMemo(() => {
-    return {
-      mode: 'multiRow',
-    }
-  }, [])
+ 
   return (
     <>
-    <CCol xs={12} >
+<Button className='btn btn-primary small' small label='Thêm' onClick={handleClick}/>
+        <CCol xs={12} >
         <CCard className='mb-4'>
         <CCardHeader>
             <strong>React Table</strong> <small>Hoverable rows</small>
           </CCardHeader>
           <CCardBody>
-          <CTable hover>
-                <CTableHead>
-                  <CTableRow>                   
-                    <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Đơn vị tính</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Trạng thái</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  
-     {data.map((items)=>( 
-        <CTableRow>
-        <CTableDataCell>{items.id}</CTableDataCell>
-        <CTableDataCell>{items.tenDonViTinh}</CTableDataCell>
-        <CTableDataCell>{items.tranghai}</CTableDataCell>
-        </CTableRow>
-    )
-     )}               
-        </CTableBody>
-              </CTable>
+          <DataTable small rowHover  value={data} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}     
+          >
+                <Column field="id" header="ID" style={{ width: '25%' }}></Column>
+                <Column filter filterPlaceholder="lọc theo tên" sortable field="tenDonViTinh" header="Đơn vị tính" style={{ width: '25%' }}></Column>
+                <Column field="trangThai" header="Trạng thái" style={{ width: '25%' }}></Column>              
+            </DataTable>
           </CCardBody>
-        </CCard>
-    </CCol>    
-      <div style={{ height: 600 }}>
-        <AgGridReact
-          rowData={rowData}
-          columnDefs={colDefs}
-          rowSelection={rowSelection}
-          pagination={pagination}          
-          paginationPageSize={paginationPageSize}
-          paginationPageSizeSelector={paginationPageSizeSelector}
-        />
-      </div>
+        </CCard>        
+    </CCol> 
+  
+      
     </>
   )
 }

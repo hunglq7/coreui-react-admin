@@ -13,8 +13,6 @@ import {
   CFormSelect,
 } from '@coreui/react'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react'
-import { SearchOutlined } from '@ant-design/icons'
-import { Button, Pagination } from 'antd'
 import { DocsComponents } from 'src/components'
 import { listChucvu } from './chucvuSlice'
 import { chucvuService } from '../../../service/chucvuService'
@@ -47,15 +45,7 @@ function Chucvu() {
       <CRow>
         <CCol xs={12}>
           <DocsComponents href="components/table/" />
-          <Button
-            onClick={() => setVisible(!visible)}
-            className="mb-2"
-            type="primary"
-            icon={<SearchOutlined />}
-          >
-            Thêm
-          </Button>
-
+    
           <CCard className="mb-4">
             <CCardHeader>
               <strong>Cập nhật bảng</strong> <small>Chức vụ</small>
@@ -84,7 +74,7 @@ function Chucvu() {
           </CCard>
         </CCol>
       </CRow>
-      <Pagination defaultCurrent={1} total={50} />
+
       <CModal visible={visible} onClose={() => setVisible(false)}>
         <CModalHeader>
           <CModalTitle>Danh mục chức vụ</CModalTitle>
