@@ -55,8 +55,8 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Grid',
-        to: '/grid/grid',
+        name: 'Sản phẩm',
+        to: '/product/product',
       },
     ],
   },

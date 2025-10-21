@@ -50,7 +50,6 @@ const Login = () => {
         navigate("/dashboard")
       }
     } catch {
-      alert("Tên đăng nhập và mật khẩu không đúng")
       addToast(toast)
     }
 
