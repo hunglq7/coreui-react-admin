@@ -12,8 +12,9 @@ import store from './store'
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <PrimeReactProvider value={{ unstyled: false }}>
+    <PrimeReactProvider  >
       <App />
     </PrimeReactProvider>
-  </Provider>,
+  </Provider>
+
 )

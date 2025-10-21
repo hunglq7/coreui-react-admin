@@ -16,6 +16,8 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
+import { CButton } from '@coreui/react';
+import { color } from 'chart.js/helpers';
 
 export default function ProductsDemo() {
     let emptyProduct = {
@@ -180,9 +182,9 @@ export default function ProductsDemo() {
 
     const leftToolbarTemplate = () => {
         return (
-            <div className="flex flex-wrap gap-2">
-                <Button label="New" icon="pi pi-plus" severity="success" onClick={openNew} />
-                <Button label="Delete" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
+            <div className="flex flex-wrap gap-2">               
+                <Button  label="Thêm" icon="pi pi-plus" severity="success" onClick={openNew} />
+                <Button label="Xóa" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </div>
         );
     };
@@ -243,7 +245,7 @@ export default function ProductsDemo() {
     );
     const productDialogFooter = (
         <React.Fragment>
-            <Button label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
+            <Button className='mr-2' label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
             <Button label="Save" icon="pi pi-check" onClick={saveProduct} />
         </React.Fragment>
     );
@@ -255,15 +257,17 @@ export default function ProductsDemo() {
     );
     const deleteProductsDialogFooter = (
         <React.Fragment>
-            <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
+            <Button  className='mr-2' label="No" icon="pi pi-times" outlined onClick={hideDeleteProductsDialog} />
             <Button label="Yes" icon="pi pi-check" severity="danger" onClick={deleteSelectedProducts} />
         </React.Fragment>
     );
 
     return (
         <div>
+          
             <Toast ref={toast} />
             <div className="card">
+    
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
                 <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
