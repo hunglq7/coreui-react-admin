@@ -1,14 +1,16 @@
 import React, { Suspense, useEffect } from 'react'
 import { Route, Routes, BrowserRouter as RootRouter } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
 import { CSpinner, useColorModes } from '@coreui/react'
-import './scss/style.scss'
-
 // We use those styles to show code examples, you should remove them in your application.
+import './scss/style.scss'
 import './scss/examples.scss'
-
-
+import 'primeicons/primeicons.css';
+import { PrimeReactProvider } from 'primereact/api'
+import 'primeflex/primeflex.css';
+import 'primereact/resources/primereact.css'
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
+import { locale, addLocale, updateLocaleOption, updateLocaleOptions, localeOption, localeOptions } from 'primereact/api';
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -22,6 +24,10 @@ const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
   const storedTheme = useSelector((state) => state.theme)
+  const value = {
+    cssTransition: false,
+
+  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.href.split('?')[1])
@@ -37,24 +43,28 @@ const App = () => {
     setColorMode(storedTheme)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+
+
   return (
-    <RootRouter>
-      <Suspense
-        fallback={
-          <div className="pt-10 text-center">
-            <CSpinner color="primary" variant="grow" />
-          </div>
-        }
-      >
-        <Routes>
-          <Route exact path="/login" name="Login Page" element={<Login />} />
-          <Route exact path="/register" name="Register Page" element={<Register />} />
-          <Route exact path="/404" name="Page 404" element={<Page404 />} />
-          <Route exact path="/500" name="Page 500" element={<Page500 />} />
-          <Route path="*" name="Home" element={<DefaultLayout />} />
-        </Routes>
-      </Suspense>
-    </RootRouter>
+    <PrimeReactProvider  >
+      <RootRouter>
+        <Suspense
+          fallback={
+            <div className="pt-10 text-center">
+              <CSpinner color="primary" variant="grow" />
+            </div>
+          }
+        >
+          <Routes>
+            <Route exact path="/login" name="Login Page" element={<Login />} />
+            <Route exact path="/register" name="Register Page" element={<Register />} />
+            <Route exact path="/404" name="Page 404" element={<Page404 />} />
+            <Route exact path="/500" name="Page 500" element={<Page500 />} />
+            <Route path="*" name="Home" element={<DefaultLayout />} />
+          </Routes>
+        </Suspense>
+      </RootRouter>
+    </PrimeReactProvider>
   )
 }
 

@@ -16,9 +16,9 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Tag } from 'primereact/tag';
-import { CButton } from '@coreui/react';
+import { CButton, CButtonToolbar, CCard } from '@coreui/react';
 import { color } from 'chart.js/helpers';
-
+import { InputSwitch } from 'primereact/inputswitch';
 export default function ProductsDemo() {
     let emptyProduct = {
         id: null,
@@ -180,9 +180,10 @@ export default function ProductsDemo() {
         setProduct(_product);
     };
 
+ 
     const leftToolbarTemplate = () => {
         return (
-            <div className="flex flex-wrap gap-2">               
+            <div className="flex flex-wrap gap-2">          
                 <Button  label="Thêm" icon="pi pi-plus" severity="success" onClick={openNew} />
                 <Button label="Xóa" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} />
             </div>
@@ -212,7 +213,7 @@ export default function ProductsDemo() {
     const actionBodyTemplate = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => editProduct(rowData)} />
+                <Button  icon="pi pi-pencil" rounded outlined className="mr-2 " onClick={() => editProduct(rowData)} />
                 <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteProduct(rowData)} />
             </React.Fragment>
         );
@@ -262,10 +263,14 @@ export default function ProductsDemo() {
         </React.Fragment>
     );
 
+  
+
     return (
         <div>
           
-            <Toast ref={toast} />
+            <Toast ref={toast} />       
+         
+           
             <div className="card">
     
                 <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
