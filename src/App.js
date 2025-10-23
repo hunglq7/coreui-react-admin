@@ -5,12 +5,8 @@ import { CSpinner, useColorModes } from '@coreui/react'
 // We use those styles to show code examples, you should remove them in your application.
 import './scss/style.scss'
 import './scss/examples.scss'
-import 'primeicons/primeicons.css';
-import { PrimeReactProvider } from 'primereact/api'
-import 'primeflex/primeflex.css';
-import 'primereact/resources/primereact.css'
-import 'primereact/resources/themes/lara-light-indigo/theme.css'
-import { locale, addLocale, updateLocaleOption, updateLocaleOptions, localeOption, localeOptions } from 'primereact/api';
+
+
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -43,28 +39,24 @@ const App = () => {
     setColorMode(storedTheme)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-
-
   return (
-    <PrimeReactProvider  >
-      <RootRouter>
-        <Suspense
-          fallback={
-            <div className="pt-10 text-center">
-              <CSpinner color="primary" variant="grow" />
-            </div>
-          }
-        >
-          <Routes>
-            <Route exact path="/login" name="Login Page" element={<Login />} />
-            <Route exact path="/register" name="Register Page" element={<Register />} />
-            <Route exact path="/404" name="Page 404" element={<Page404 />} />
-            <Route exact path="/500" name="Page 500" element={<Page500 />} />
-            <Route path="*" name="Home" element={<DefaultLayout />} />
-          </Routes>
-        </Suspense>
-      </RootRouter>
-    </PrimeReactProvider>
+    <RootRouter>
+      <Suspense
+        fallback={
+          <div className="pt-10 text-center">
+            <CSpinner color="primary" variant="grow" />
+          </div>
+        }
+      >
+        <Routes>
+          <Route exact path="/login" name="Login Page" element={<Login />} />
+          <Route exact path="/register" name="Register Page" element={<Register />} />
+          <Route exact path="/404" name="Page 404" element={<Page404 />} />
+          <Route exact path="/500" name="Page 500" element={<Page500 />} />
+          <Route path="*" name="Home" element={<DefaultLayout />} />
+        </Routes>
+      </Suspense>
+    </RootRouter>
   )
 }
 

@@ -19,6 +19,11 @@ import { Tag } from 'primereact/tag';
 import { CButton, CButtonToolbar, CCard } from '@coreui/react';
 import { color } from 'chart.js/helpers';
 import { InputSwitch } from 'primereact/inputswitch';
+import 'primeicons/primeicons.css';
+// import { PrimeReactProvider } from 'primereact/api'
+import 'primeflex/primeflex.css';
+import 'primereact/resources/primereact.css'
+import 'primereact/resources/themes/lara-light-indigo/theme.css'
 export default function ProductsDemo() {
     let emptyProduct = {
         id: null,
