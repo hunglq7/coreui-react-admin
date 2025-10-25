@@ -7,6 +7,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button'
 import { Toast } from 'primereact/toast';
+import { Tag } from 'primereact/tag';
 import {  CCard,
     CCardBody,
     CCardHeader,
@@ -23,7 +24,7 @@ const donvitinh = () => {
     tenDonViTinh: '',
  trangThai:true
 };
-  const donvitinhs = useSelector((state) => state.donvitinhs.data)
+ const donvitinhs = useSelector((state) => state.donvitinhs.data)
   const dispatch = useDispatch()
   // const [donvitinhs, setDonvitinhs] = useState(null);
   const [donvitinhDialog, setDonvitinhDialog] = useState(false);
@@ -65,12 +66,27 @@ const confirmDeleteDonvitinh = (donvitinh) => {
     );
 };
 
+ const statusBodyTemplate = (rowData) => {
+  return <Tag value={rowData.trangThai?"Đang dùng":"Niêm cất"} severity={getSeverity(rowData)}></Tag>;
+};
+
+ const getSeverity = (donvitinh) => {
+  switch (donvitinh.trangThai) {
+      case true:
+          return 'success';
+      case false:
+          return 'warning';
+      default:
+          return null;
+  }
+};
+
 
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await donvitinhService.getDonvitinh()       
-        dispatch(listDonvitinh(response.data))
+        dispatch(listDonvitinh(response.data))     
       } catch (error) {
         console.log(error)
       }
@@ -91,7 +107,7 @@ const confirmDeleteDonvitinh = (donvitinh) => {
           >
                 <Column field="id" header="ID" style={{ width: '25%' }}></Column>
                 <Column filter filterPlaceholder="lọc theo tên" sortable field="tenDonViTinh" header="Đơn vị tính" style={{ width: '25%' }}></Column>
-                <Column field="trangThai" header="Trạng thái" style={{ width: '25%' }}></Column> 
+                <Column field="trangThai" header="Trạng thái" body={statusBodyTemplate}  style={{ width: '25%' }}></Column> 
                 <Column field='hanhDong' header="Hành động" body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>             
             </DataTable>
           </CCardBody>

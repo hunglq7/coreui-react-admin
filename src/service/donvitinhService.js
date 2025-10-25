@@ -7,7 +7,7 @@ const getDonvitinh = async () => {
 };
 
 const putDonvitinh = async (donvitinh) => {
-    return await api.put('Donvitinh/UpdateMultiple', donvitinh).then((response) => {
+    return await api.put(`Donvitinh/UpdateMultiple`, donvitinh).then((response) => {
         console.log(response)
         return response
 
