@@ -6,7 +6,6 @@ export const chucvuSlice = createSlice({
     name: 'listChucvu',
     initialState,
     reducers: {
-
         listChucvu: (state, action) => {
             state.data = action.payload
         },
