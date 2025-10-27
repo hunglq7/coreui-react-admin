@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect,useRef  } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {  readAllDonvitinhs,createDonvitinh } from './donvitinhSlice';
+import {  readAllDonvitinhs,createDonvitinh, updateDonvitinh, deleteDonvitinh } from './donvitinhSlice';
 import { donvitinhService } from '../../../service/donvitinhService'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -12,27 +12,24 @@ import { Dialog } from 'primereact/dialog';
 import { Toolbar } from 'primereact/toolbar';
 import { InputText } from 'primereact/inputtext';
 import { RadioButton } from 'primereact/radiobutton';
+import { InputSwitch } from "primereact/inputswitch";
 import {  CCard,
     CCardBody,
     CCardHeader,
     CCol,
 } from '@coreui/react'
 import 'primeicons/primeicons.css';
-// import { PrimeReactProvider } from 'primereact/api'
 import 'primeflex/primeflex.css';
-import 'primereact/resources/primereact.css'
-import 'primereact/resources/themes/lara-light-indigo/theme.css'
 
 
 const donvitinh = () => {
-
 
   let emptyDonvitinh = {
     id: 0,
     tenDonViTinh: '',
     trangThai:true
 };
- const data= useSelector((state) => state.donvitinhs.data)
+const data= useSelector((state) => state.donvitinhs.data)
   const dispatch = useDispatch()
   const [donvitinhs, setDonvitinhs] = useState(null);
   const [donvitinhDialog, setDonvitinhDialog] = useState(false);
@@ -43,6 +40,7 @@ const donvitinh = () => {
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [title,setTitle]=useState('')
+  const [checked, setChecked] = useState(false);
   const toast = useRef(null);
   const dt = useRef(null);
 // const onChangeHandler=(e)=>{
@@ -53,26 +51,18 @@ useEffect(() => {
   async function fetchData() {
     try {
       // const response = await donvitinhService.getDonvitinh()       
-      dispatch(readAllDonvitinhs()) 
-      setDonvitinhs(data)    
+      dispatch(readAllDonvitinhs())      
+      setDonvitinhs(data)  
     } catch (error) {
       console.log(error)
     }
   }
   fetchData()
-}, [])
+}, [dispatch])
 
-  const editDonvitinh = () => {
+  const editDonvitinh = (donvitinh) => {
     setTitle("Sửa đơn vị tính")
-    const dvt={
-      id:111,
-      tenDonViTinh:'Thêm mới',
-      trangThai:true
-    }
-    donvitinhService.putDonvitinh(dvt)
-    setDonvitinh({ ...donvitinh });
-    toast.current.show({ severity: 'success', summary: 'Thông báo', detail: `Cập nhậ ID: ${donvitinh.id} thành công `, life: 3000 });
-    console.log(donvitinh);
+   setDonvitinh({...donvitinh})
     setDonvitinhDialog(true);
 };
 const confirmDeleteDonvitinh = (donvitinh) => {
@@ -86,8 +76,8 @@ const confirmDeleteDonvitinh = (donvitinh) => {
   const actionBodyTemplate = (rowData) => {
     return (
         <React.Fragment>
-            <Button icon="pi pi-pencil" rounded outlined className="mr-2 " onClick={() => editDonvitinh()}/>
-            <Button  icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteDonvitinh(rowData)} />
+            <Button icon="pi pi-pencil" rounded outlined className="mr-2 " onClick={() => editDonvitinh(rowData)}/>
+            <Button  icon="pi pi-trash" rounded outlined severity="danger" onClick={() => onDelete(rowData)} />
         </React.Fragment>
     );
 };
@@ -119,22 +109,21 @@ const onInputChange = (e, name) => {
 
 const onTrangthaiChange = (e) => {
   let _donvitinh = { ...donvitinh };
-
-  _donvitinh[true] = e.value;
-  setProduct(_donvitinh);
+  _donvitinh['trangThai'] = e.value;
+  setDonvitinh(_donvitinh);
 };
 
 const leftToolbarTemplate = () => {
   return (
       <div className="flex flex-wrap gap-2">          
-          <Button  label="Thêm" icon="pi pi-plus" severity="success" onClick={openNew} />
-          <Button label="Xóa" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedDonvitinhs || !selectedDonvitinhs.length} />
+          <Button size='small'  label="Thêm" icon="pi pi-plus" severity="success" onClick={openNew} />
+          <Button size='small' label="Xóa" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedDonvitinhs || !selectedDonvitinhs.length} />
       </div>
   );
 };
 
 const rightToolbarTemplate = () => {
-  return <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
+  return <Button size='small' label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
 };
 
 const confirmDeleteSelected = () => {
@@ -146,48 +135,6 @@ const hideDialog = () => {
   setDonvitinhDialog(false);
 };
 
-const donvitinhDialogFooter = (
-  <React.Fragment>
-      <Button className='mr-2' label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
-      <Button  label="Save" icon="pi pi-check"  />
-  </React.Fragment>
-);
-
-const saveDonvitinh = () => {
-//   setSubmitted(true);
-//   console.log(donvitinh)
-//   if (donvitinh.tenDonViTinh.trim()) {
-//     let _donvitinhs = [...donvitinhs];
-//     let _donvitinh = { ...donvitinh };
-
-//     if (donvitinh.id) {
-//         const index = findIndexById(donvitinh.id);
-
-//         _donvitinhs[index] = _donvitinh;
-//         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Đơn vị tính Updated', life: 3000 });
-//     } else {
-//         _donvitinh.id = createId();
-//         _donvitinhs.push(_donvitinh);
-//         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Đơn vị tính Created', life: 3000 });
-//     }
-
-//     setDonvitinhs(_donvitinhs);
-//     setDonvitinhtDialog(false);
-//     setDonvitinh(emptyDonvitinh);
-// }
- 
-};
-
-const createId = () => {
-  let id = '';
-  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (let i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-
-  return id;
-};
 
 const exportCSV = () => {
   dt.current.exportCSV();
@@ -201,11 +148,29 @@ const openNew = () => {
 };
 const submitFormHandle=(e)=>{
   e.preventDefault();
-  dispatch(createDonvitinh(donvitinh))
+  const id=donvitinh.id
+  if(id==0) {
+    dispatch(createDonvitinh(donvitinh))
+    setDonvitinh(emptyDonvitinh)
+    toast.current.show({ severity: 'success', summary: 'Thông báo', detail: `Thêm bản ghi thành công `, life: 3000 });
+  } else{
+    dispatch(updateDonvitinh(donvitinh))
+    toast.current.show({ severity: 'success', summary: 'Thông báo', detail: `Sửa bản gi ${donvitinh.id} thành công `, life: 3000 });
+    setDonvitinhDialog(false)
+  }
+ 
+  fetchData()
 }
+const onDelete=(donvitinh)=>{
+  dispatch(deleteDonvitinh(donvitinh))
+  toast.current.show({ severity: 'success', summary: 'Thông báo', detail: `Xóa bản gi ${donvitinh.id} thành công `, life: 3000 });
+    setDonvitinhDialog(false)
+}
+
 
   return (
     <>
+    
   <Toast ref={toast} />     
         <CCol xs={12} >
         <CCard className='mb-4'>
@@ -225,13 +190,13 @@ const submitFormHandle=(e)=>{
         </CCard>        
     </CCol> 
 
-    <Dialog visible={donvitinhDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header={title} modal className="p-fluid" footer={donvitinhDialogFooter} onHide={hideDialog}>
+    <Dialog visible={donvitinhDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header={title} modal className="p-fluid"  onHide={hideDialog}>
                <form onSubmit={submitFormHandle}>
                <div className="field">
                     <label htmlFor="name" className="font-bold">
                        Id
                     </label>
-                    <InputText  id="id" value={donvitinh.id} onChange={(e) => onInputChange(e, 'id')} required autoFocus />               
+                    <InputText disabled  id="id" value={donvitinh.id} onChange={(e) => onInputChange(e, 'id')} required autoFocus />               
                 </div>
                 <div className="field">
                     <label htmlFor="tenDonViTinh" className="font-bold">
@@ -240,27 +205,21 @@ const submitFormHandle=(e)=>{
                     <InputText id="tenDonViTinh" value={donvitinh.tenDonViTinh} onChange={(e) => onInputChange(e, 'tenDonViTinh')} required rows={3} cols={20} />
                 </div>
 
-                <div className="field">
+                <div className="field flex flex-wrap gap-2">
                     <label className="mb-3 font-bold">Trạng thái</label>
-                    <div className="formgrid grid">
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category1" name="trangThai" value={donvitinh.trangThai} onChange={onTrangthaiChange} checked={donvitinh.trangThai === true} />
-                            <label htmlFor="category1">Đang dùng</label>
-                        </div>
-                        <div className="field-radiobutton col-6">
-                            <RadioButton inputId="category2" name="trangThai" value={donvitinh.trangThai} onChange={onTrangthaiChange} checked={donvitinh.trangThai === false} />
-                            <label htmlFor="category1">Không dùng</label>
-                        </div>
-                        
-                    </div>
+                    <InputSwitch checked={donvitinh.trangThai} onChange={onTrangthaiChange} />
+                </div>                     
+    
+                <div className='row'>
+                  <div className='col'>
+                  </div>
+                  <div className='col flex align-items-center justify-content-end'>
+                  <Button size='small' className='mr-2' label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
+                  <Button size='small' type='submit' label="Save" icon="pi pi-check"  />
+                  </div>
                 </div>
-
-                <div className='flex justify-content-end'>
-      <Button className='mr-2' label="Cancel" icon="pi pi-times" outlined onClick={hideDialog} />
-      <Button type='submit' label="Save" icon="pi pi-check"  />
-  </div>
-               </form>
-                
+              
+               </form>          
 
                 
             </Dialog>

@@ -6,14 +6,13 @@ const getDonvitinh = async () => {
     });
 };
 
-const putDonvitinh = async (donvitinh) => {
-    return await api.put(`Donvitinh/UpdateMultiple`, donvitinh).then((response) => {
-        console.log(response)
+const addDonvitinh = async (donvitinh) => {
+    return await api.post(`Donvitinh`, donvitinh).then((response) => {
         return response
 
     });
 }
 export const donvitinhService = {
     getDonvitinh,
-    putDonvitinh
+    addDonvitinh
 }

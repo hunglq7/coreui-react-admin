@@ -4,9 +4,15 @@ const loginWithUserCredentials = async (email, password) => {
         email, password
     }
     return await api.post('Users/authenticate', data).then((response) => {
-        localStorage.setItem("token", JSON.stringify(response.data));
-        return response.data
+        localStorage.setItem("session", JSON.stringify(response));
+        return response
     });
+}
+
+const accessToken = () => {
+    return localStorage['session']
+        ? JSON.parse(localStorage['session']).resultObj
+        : null;
 }
 const logout = () => {
     localStorage.clear();
@@ -14,5 +20,6 @@ const logout = () => {
 
 export const authService = {
     loginWithUserCredentials,
-    logout
+    logout,
+    accessToken
 }

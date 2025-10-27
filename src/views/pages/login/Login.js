@@ -19,15 +19,15 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useRef, useState } from 'react'
 import Toasts from '../../../components/AppToasts'
-import { useEffect } from 'react'
 import { authService } from '../../../service/authService'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
+import { Toast } from 'primereact/toast';
+
 const Login = () => {
-  const [toast, addToast] = useState(0)
+
+  const toast = useRef(null);
   const form = useRef();
-  const toaster = useRef()
-  const toasts = Toasts({ title: 'Thông báo', body: 'Tên đăng nhập hoặc mật khẩu không đúng' })
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [submitted, setSubmitted] = useState(false);
@@ -50,7 +50,7 @@ const Login = () => {
         navigate("/dashboard")
       }
     } catch {
-      addToast(toast)
+      toast.current.show({ severity: 'success', summary: 'Thông báo', detail: `Tên đăng nhập hoặc mật khẩu không đúng `, life: 3000 });
     }
 
 
@@ -60,6 +60,7 @@ const Login = () => {
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
+      <Toast ref={toast} />
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={8}>
@@ -92,7 +93,6 @@ const Login = () => {
                         <CButton color="primary" className="px-4" onClick={handSummit}>
                           Login
                         </CButton>
-                        <CToaster ref={toaster} push={toast} placement="top-end" />
                       </CCol>
                       <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0">
