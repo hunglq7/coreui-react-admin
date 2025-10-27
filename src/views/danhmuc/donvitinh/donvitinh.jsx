@@ -65,19 +65,19 @@ useEffect(() => {
    setDonvitinh({...donvitinh})
     setDonvitinhDialog(true);
 };
-const confirmDeleteDonvitinh = (donvitinh) => {
-  setDonvitinh(donvitinh);
-  toast.current.show({ severity: 'warn', summary: 'Thông báo', detail: `Xóa ID: ${donvitinh.id} thành công `, life: 3000 });
-  console.log(donvitinh)
-  setDeleteDonvitinhDialog(true);
-};
+// const confirmDeleteDonvitinh = (donvitinh) => {
+//   setDonvitinh(donvitinh);
+//   toast.current.show({ severity: 'warn', summary: 'Thông báo', detail: `Xóa ID: ${donvitinh.id} thành công `, life: 3000 });
+//   console.log(donvitinh)
+//   setDeleteDonvitinhDialog(true);
+// };
 
 
   const actionBodyTemplate = (rowData) => {
     return (
         <React.Fragment>
             <Button icon="pi pi-pencil" rounded outlined className="mr-2 " onClick={() => editDonvitinh(rowData)}/>
-            <Button  icon="pi pi-trash" rounded outlined severity="danger" onClick={() => onDelete(rowData)} />
+            <Button  icon="pi pi-trash" rounded outlined severity="danger" onClick={confirmDeleteDonvitinh(rowData)} />
         </React.Fragment>
     );
 };
@@ -166,7 +166,21 @@ const onDelete=(donvitinh)=>{
   toast.current.show({ severity: 'success', summary: 'Thông báo', detail: `Xóa bản gi ${donvitinh.id} thành công `, life: 3000 });
     setDonvitinhDialog(false)
 }
+const hideDeleteDonvitinhDialog = () => {
+  setDeleteDonvitinhDialog(false);
+};
 
+const deleteDonvitinhDialogFooter = (
+  <React.Fragment>
+      <Button label="No" icon="pi pi-times" outlined onClick={hideDeleteDonvitinhDialog} />
+      <Button label="Yes" icon="pi pi-check" severity="danger" onClick={onDelete} />
+  </React.Fragment>
+);
+
+const confirmDeleteDonvitinh = (donvitinh) => {
+  setDonvitinh(donvitinh);
+  setDeleteDonvitinhDialog(true);
+};
 
   return (
     <>
@@ -219,9 +233,20 @@ const onDelete=(donvitinh)=>{
                   </div>
                 </div>
               
-               </form>          
+               </form>    
 
                 
+            </Dialog>
+
+            <Dialog visible={deleteDonvitinhDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteDonvitinhDialogFooter} onHide={hideDeleteDonvitinhDialog}>
+                <div className="confirmation-content">
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                    {donvitinh && (
+                        <span>
+                            Are you sure you want to delete <b>{donvitinh.tenDonvitinh}</b>?
+                        </span>
+                    )}
+                </div>
             </Dialog>
 
   
