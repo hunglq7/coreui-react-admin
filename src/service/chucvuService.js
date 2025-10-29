@@ -1,3 +1,4 @@
+import { data } from 'autoprefixer';
 import api from '../Utils/Api'
 
 const getChucvu = async () => {
@@ -5,6 +6,12 @@ const getChucvu = async () => {
         return response
     });
 };
+const addChucvu = async (data) => {
+    return await api.post('Chucvu', data).then(response => {
+        return response
+    })
+}
 export const chucvuService = {
-    getChucvu
+    getChucvu,
+    addChucvu
 }

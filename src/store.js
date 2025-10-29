@@ -2,6 +2,7 @@ import { legacy_createStore as createStore, compose, applyMiddleware } from 'red
 
 import { configureStore } from '@reduxjs/toolkit'
 import chucvuReducer from './views/danhmuc/chucvu/chucvuSlice'
+// import chucvuReducer from './views/danhmuc/chucvu/chucvuSlice'
 import phongbanReducer from './views/danhmuc/phongban/phongbanSlice'
 import loginReducer from './views/pages/login/loginSlice'
 import donvitinhReducer from './views/danhmuc/donvitinh/donvitinhSlice'

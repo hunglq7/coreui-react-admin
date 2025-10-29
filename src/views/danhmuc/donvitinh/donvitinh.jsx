@@ -193,7 +193,7 @@ const confirmDeleteDonvitinh = (donvitinh) => {
           </CCardHeader>
           <CCardBody>
           <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
-          <DataTable stripedRows rowHover  size='small' value={data} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}     
+          <DataTable stripedRows rowHover   size='small' selection={selectedDonvitinhs} value={data} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}     
           >
                 <Column field="id" header="ID" style={{ width: '25%' }} ></Column>
                 <Column filter filterPlaceholder="lọc theo tên" sortable field="tenDonViTinh" header="Đơn vị tính" style={{ width: '50%' }} ></Column>

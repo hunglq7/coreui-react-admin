@@ -13,8 +13,11 @@ import {
   CFormSelect,
 } from '@coreui/react'
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react'
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import {styled} from 'styled-components';
 import { DocsComponents } from 'src/components'
-import { listChucvu } from './chucvuSlice'
+import { Button } from 'primereact/button'
 import { chucvuService } from '../../../service/chucvuService'
 
 function Chucvu() {
@@ -24,15 +27,26 @@ function Chucvu() {
     '--cui-btn-font-size': '.75rem',
   }
 
+const initChucvu={
+  id:0,
+  tenChucVu:"Test 1",
+  trangThai:true
+}
+ 
   const [visible, setVisible] = useState(false)
-  const data = useSelector((state) => state.chucvus.data)
+  // const data = useSelector((state) => state.chucvus.data)
+  const [chucvus,setChucvu]=useState([])
+  // const [chucvu,setChucvu]=useState({id:0,tenChucVu:"Test 1",trangThai:true})
   const dispatch = useDispatch()
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await chucvuService.getChucvu()
-        dispatch(listChucvu(response.data))
+      await chucvuService.getChucvu().then(response=>{
+          setChucvu(response.data)
+        })
+        // const response = await chucvuService.getChucvu()
+        // dispatch(readAllChucvu())
       } catch (error) {
         console.log(error)
       }
@@ -40,9 +54,11 @@ function Chucvu() {
     fetchData()
   }, [dispatch])
 
+
+
   return (
     <>
-      <CRow>
+      {/* <CRow>
         <CCol xs={12}>
           <DocsComponents href="components/table/" />
     
@@ -61,7 +77,7 @@ function Chucvu() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((items) => (
+                  {chucvus.map((items) => (
                     <tr key={items.id}>
                       <td>{items.id}</td>
                       <td>{items.tenChucVu}</td>
@@ -73,7 +89,18 @@ function Chucvu() {
             </CCardBody>
           </CCard>
         </CCol>
-      </CRow>
+      </CRow> */}
+   
+<CButton className='btn btn-primary' onClick={()=>setVisible(true)}>Thêm</CButton>
+
+      <p>Bảng chức vụ</p>
+      <DataTable table stripedRows rowHover   value={chucvus}  dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Chức vụ" >
+      <Column field="id" header="ID" sortable style={{ minWidth: '6rem' }}></Column>
+      <Column field="tenChucVu" header="Tên chức vụ" sortable style={{ minWidth: '16rem' }}></Column>
+      <Column field="trangThai" header="Trạng thái" sortable style={{ minWidth: '16rem' }}></Column>
+      </DataTable>
 
       <CModal visible={visible} onClose={() => setVisible(false)}>
         <CModalHeader>
